@@ -5,6 +5,7 @@ import OtherInfo from "./OtherInfo";
 
 const Form = () => {
   const [page, setPage] = useState(0);
+  const [error, setError] = useState("");
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -18,6 +19,49 @@ const Form = () => {
 
   const FORM_TITLES = ["Sign Up", "Personal Info", "Other Info"];
 
+  const validateStep = () => {
+    if (page === 0) {
+      if (!formData.email.includes("@")) {
+        return "Email is invalid";
+      }
+      if (formData.password.length < 6) {
+        return "Password must be at least 6 characters";
+      }
+      if (formData.password !== formData.confirmPassword) {
+        return "Passwords do not match";
+      }
+    }
+
+    if (page === 1) {
+      if (!formData.firstName || !formData.lastName) {
+        return "Name is required";
+      }
+      if (!formData.age || formData.age < 1) {
+        return "Enter valid age";
+      }
+    }
+
+    if (page === 2) {
+      if (!formData.nationality) {
+        return "Nationality is required";
+      }
+    }
+
+    return "";
+  };
+
+  const handleNext = () => {
+    const validationError = validateStep();
+
+    if (validationError) {
+      setError(validationError);
+      return; // stop here, no page change
+    }
+
+    setError("");
+    setPage((prev) => prev + 1);
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-pink-100">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-lg p-6 border border-pink-200">
@@ -29,7 +73,12 @@ const Form = () => {
         {/* Form Content */}
         <div className="mb-6">
           {page === 0 ? (
-            <SignUp formData={formData} setformData={setFormData} />
+            <div>
+              <SignUp formData={formData} setformData={setFormData} />
+              {error && (
+                <p className="text-red-500 text-sm mb-3 text-center">{error}</p>
+              )}
+            </div>
           ) : page === 1 ? (
             <PresonalInfo formData={formData} setformData={setFormData} />
           ) : (
@@ -57,7 +106,7 @@ const Form = () => {
               if (page === FORM_TITLES.length - 1) {
                 console.log("form has subbmited");
               } else {
-                setPage(page + 1);
+                handleNext();
               }
             }}
             className="px-4 py-2 rounded-lg font-medium transition bg-pink-500 text-white hover:bg-pink-600"
