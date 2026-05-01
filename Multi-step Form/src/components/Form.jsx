@@ -6,16 +6,15 @@ import OtherInfo from "./OtherInfo";
 const Form = () => {
   const [page, setPage] = useState(0);
   const [formData, setFormData] = useState({
-    email:"",
-    password:"",
-    confirmPassword:"",
-    firstName:"",
-    lastName:"",
-    age:"",
-    nationality:"",
-    other:""
-
-  })
+    email: "",
+    password: "",
+    confirmPassword: "",
+    firstName: "",
+    lastName: "",
+    age: "",
+    nationality: "",
+    other: "",
+  });
 
   const FORM_TITLES = ["Sign Up", "Personal Info", "Other Info"];
 
@@ -30,11 +29,11 @@ const Form = () => {
         {/* Form Content */}
         <div className="mb-6">
           {page === 0 ? (
-            <SignUp />
+            <SignUp formData={formData} setformData={setFormData} />
           ) : page === 1 ? (
-            <PresonalInfo />
+            <PresonalInfo formData={formData} setformData={setFormData} />
           ) : (
-            <OtherInfo />
+            <OtherInfo formData={formData} setformData={setFormData} />
           )}
         </div>
 
@@ -54,16 +53,16 @@ const Form = () => {
           </button>
 
           <button
-            disabled={page === FORM_TITLES.length - 1}
-            onClick={() => setPage(page + 1)}
-            className={`px-4 py-2 rounded-lg font-medium transition 
-              ${
-                page === FORM_TITLES.length - 1
-                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                  : "bg-pink-500 text-white hover:bg-pink-600"
-              }`}
+            onClick={() => {
+              if (page === FORM_TITLES.length - 1) {
+                console.log("form has subbmited");
+              } else {
+                setPage(page + 1);
+              }
+            }}
+            className="px-4 py-2 rounded-lg font-medium transition bg-pink-500 text-white hover:bg-pink-600"
           >
-            Next
+            {page === FORM_TITLES.length - 1 ? "submit" : "Next"}
           </button>
         </div>
       </div>
