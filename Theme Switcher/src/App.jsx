@@ -4,19 +4,22 @@ import About from "./pages/About";
 import Blog from "./pages/Blog";
 import Home from "./pages/Home";
 import Navbar from "./components/Navbar";
+import { TheamProvider } from "./utils/Theam-Context";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      {/* navbar */}
-      <Navbar />
-      {/* Routes */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/blog" element={<Blog />} />
-      </Routes>
-    </BrowserRouter>
+    <TheamProvider>
+      <BrowserRouter>
+        {/* navbar */}
+        <Navbar />
+        {/* Routes */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/blog" element={<Blog />} />
+        </Routes>
+      </BrowserRouter>
+    </TheamProvider>
   );
 };
 
