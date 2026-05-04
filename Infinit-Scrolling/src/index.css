@@ -1,0 +1,16 @@
+.card-container {
+  /* center the card container only one card in one row ?
+  */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+}
+
+.card {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 16px;
+  margin-bottom: 16px;
+  width: 300px;
+}
